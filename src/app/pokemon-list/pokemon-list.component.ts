@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { List } from '../models/pokemon-list.model';
 import { PokemonService } from '../services/pokemon.service';
+import { Pokemon } from '../models/pokemon.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -11,11 +13,14 @@ import { PokemonService } from '../services/pokemon.service';
 export class PokemonListComponent {
   pokemons$: Observable<List>;
 
-  constructor(private pokemonService: PokemonService) {
+  constructor(
+    private pokemonService: PokemonService,
+    private router: Router
+  ) {
     this.pokemons$ = this.pokemonService.pokemons$;
   }
 
-  getPokemon(url: string) {
-    this.pokemonService.getPokemonDetails(url);
+  getPokemon(pokemon: Pokemon) {
+    this.router.navigate(['pokemons', pokemon.name]);
   }
 }
